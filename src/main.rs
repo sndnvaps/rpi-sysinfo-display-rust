@@ -1,3 +1,7 @@
+#[macro_use]
+extern crate scan_fmt;
+use std::error::Error;
+
 extern crate alloc;
 extern crate linux_embedded_hal as hal;
 extern crate ssd1306;
@@ -7,11 +11,6 @@ use std::time::Duration;
 
 pub mod sysinfo;
 
-#[macro_use]
-extern crate scan_fmt;
-use std::error::Error;
-
-use alloc::string::ToString;
 use chrono::Local;
 use local_ipaddress as ip;
 
@@ -37,24 +36,22 @@ fn main() {
     // just make a loop
     loop {
         let rpi_ip = ip::get().unwrap();
-        let rpi_time = Local::now().format("%Y-%m-%d %H:%M").to_string();
+        let rpi_time = format!("{}", Local::now().format("%Y-%m-%d %H:%M"));
         let cpu_temp = sysinfo::get_cpu_temp();
         let meminfo = sysinfo::get_ram();
         let cpu_usage = sysinfo::get_sys_cpu_usage();
-        println!("main loop cpu_use = {}",cpu_usage);
+        //println!("main loop cpu_use = {}", cpu_usage);
 
         // println!("MemTotal {} kB,MemFree {} kB",meminfo.total,meminfo.free);
 
-        let ip_info_show = "IP: ".to_owned() + &rpi_ip;
-        let meminfo_show = "RAM: ".to_owned()
-            + &((meminfo.total - meminfo.free) / 1024).to_string()
-            + " / "
-            + &(meminfo.total / 1024).to_string()
-            + " MB";
-        let cpu_info_show = format!("CPU: {}% {}`C",cpu_usage,&cpu_temp);
-        println!("cpu_info_show -> {}",cpu_info_show);
-
-        //let cpu_info_show = "CPU LOAD: ".to_owned() + &cpu_usage + "% " + &cpu_temp + &"`C";
+        let ip_info_show = format!("IP: {}", &rpi_ip);
+        let meminfo_show = format!(
+            "RAM: {} / {} MB",
+            ((meminfo.total - meminfo.free) / 1024),
+            (meminfo.total / 1024)
+        );
+        let cpu_info_show = format!("CPU Load: {}% {}`C", cpu_usage, &cpu_temp);
+        //println!("cpu_info_show -> {}", cpu_info_show);
 
         let text_style = MonoTextStyleBuilder::new()
             .font(&FONT_6X12)

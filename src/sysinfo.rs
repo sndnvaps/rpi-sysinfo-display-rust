@@ -78,7 +78,7 @@ pub fn get_ram() -> MemInfo {
         u32
     )
     .unwrap(); //types
-               //println!("MemTotal {} kB,MemFree {} kB",mem_total,mem_free);
+    //println!("MemTotal {} kB,MemFree {} kB",mem_total,mem_free);
     let mem_info = MemInfo {
         total: mem_total,
         free: mem_free,
@@ -129,12 +129,12 @@ fn cal_cpuoccupy(c1: CpuOccupy, c2: CpuOccupy) -> f32 {
     let id = c2.idle as f32; //用户第一次和第二次的时间之差再赋给id
     let sd = c1.idle as f32; //系统第一次和第二次的时间之差再赋给sd
     let sum = nd - od;
-     //println!("od = {}, nd = {}, id = {} ,sd = {}",od,nd,id,sd);
+    //println!("od = {}, nd = {}, id = {} ,sd = {}",od,nd,id,sd);
     if sum != 0.0 {
         let idle = id - sd;
         cpu_use = 100_f32 - (idle / sum) * 100.0;
         cpu_use = cpu_use.round_fixed(2);
-        println!("cpu_use = {}", cpu_use);
+        // println!("cpu_use = {}", cpu_use);
     }
 
     return cpu_use;
