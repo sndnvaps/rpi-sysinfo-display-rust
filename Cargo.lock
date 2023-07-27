@@ -439,6 +439,7 @@ dependencies = [
  "local_ipaddress",
  "scan_fmt",
  "ssd1306",
+ "version_check",
 ]
 
 [[package]]
