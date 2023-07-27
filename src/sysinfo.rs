@@ -1,9 +1,13 @@
-use execute::Execute;
+extern crate alloc;
+extern crate scan_fmt;
+
+use std::error::Error;
 use std::process::{Command, Stdio};
 use std::thread;
 use std::time::Duration;
-extern crate alloc;
 
+use execute::Execute;
+use scan_fmt::scan_fmt;
 //rust f32 custom decimal point length pick up from
 //https://zhuanlan.zhihu.com/p/466389032
 trait F32Utils {
@@ -78,7 +82,7 @@ pub fn get_ram() -> MemInfo {
         u32
     )
     .unwrap(); //types
-    //println!("MemTotal {} kB,MemFree {} kB",mem_total,mem_free);
+               //println!("MemTotal {} kB,MemFree {} kB",mem_total,mem_free);
     let mem_info = MemInfo {
         total: mem_total,
         free: mem_free,
@@ -106,7 +110,7 @@ fn get_cpu_occupy() -> CpuOccupy {
         u32
     )
     .unwrap(); //types
-    //println!("cpu {} {} {} {} {} {} {} ",user,nice,system,idle,iowait,irq,softirq);
+               //println!("cpu {} {} {} {} {} {} {} ",user,nice,system,idle,iowait,irq,softirq);
 
     let cpu_info = CpuOccupy {
         user,

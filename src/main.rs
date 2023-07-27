@@ -1,7 +1,4 @@
 #[macro_use]
-extern crate scan_fmt;
-use std::error::Error;
-
 extern crate alloc;
 extern crate linux_embedded_hal as hal;
 extern crate ssd1306;
@@ -26,7 +23,7 @@ use ssd1306::{prelude::*, I2CDisplayInterface, Ssd1306};
 
 use hal::I2cdev;
 
-fn main()  -> Result<(),std::io::Error>{
+fn main() {
     let i2c = I2cdev::new("/dev/i2c-1").unwrap();
     let interface = I2CDisplayInterface::new(i2c);
     let mut display = Ssd1306::new(interface, DisplaySize128x64, DisplayRotation::Rotate0)
@@ -36,7 +33,7 @@ fn main()  -> Result<(),std::io::Error>{
     // just make a loop
     loop {
         let rpi_ip = ip::get().unwrap();
-        let rpi_time = format!("{}", Local::now().format("%Y-%m-%d %H:%M"));
+        let rpi_time = format!("{}", Local::now().format("%Y-%m-%d %H:%M:%S"));
         let cpu_temp = sysinfo::get_cpu_temp();
         let meminfo = sysinfo::get_ram();
         let cpu_usage = sysinfo::get_sys_cpu_usage();
@@ -50,7 +47,7 @@ fn main()  -> Result<(),std::io::Error>{
             ((meminfo.total - meminfo.free) / 1024),
             (meminfo.total / 1024)
         );
-        let cpu_info_show = format!("CPU Load: {}% {}`C", cpu_usage, &cpu_temp);
+        let cpu_info_show = format!("CPU: {}% {}`C", cpu_usage, &cpu_temp);
         //println!("cpu_info_show -> {}", cpu_info_show);
 
         let text_style = MonoTextStyleBuilder::new()
