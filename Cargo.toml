@@ -2,6 +2,12 @@
 name = "rpi-sysinfo-display"
 version = "0.5.0"
 edition = "2021"
+description = "0.96 inch oled driver for OPENWRT Raspberry Pi"
+version = "0.5.1"
+keywords = ["i2c", "driver", "ssd1306", "rpi", "openwrt"]
+repository = "github.com/sndnvaps/rpi-sysinfo-display-rust"
+authors = ["Samuel Freeman <admin@sndnvaps.com>"]
+license = "MIT/Apache-2.0"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

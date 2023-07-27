@@ -26,7 +26,7 @@ use ssd1306::{prelude::*, I2CDisplayInterface, Ssd1306};
 
 use hal::I2cdev;
 
-fn main() {
+fn main()  -> Result<(),std::io::Error>{
     let i2c = I2cdev::new("/dev/i2c-1").unwrap();
     let interface = I2CDisplayInterface::new(i2c);
     let mut display = Ssd1306::new(interface, DisplaySize128x64, DisplayRotation::Rotate0)
