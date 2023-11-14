@@ -15,4 +15,9 @@ modify /etc/config/system
 
 cross compile in host
 
-    cargo build --release --target=aarch64-unknown-linux-musl
+    $cargo build --release --target=aarch64-unknown-linux-musl
+
+use cargo-make to build the project
+
+    $cargo install --force cargo-make
+    $cargo make build

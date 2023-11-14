@@ -39,8 +39,23 @@ impl F32Utils for f32 {
     }
 }
 
+#[cfg(feature = "raspberrypi")]
 pub fn get_cpu_temp() -> String {
     let mut command = execute::command_args!("cat", "/sys/class/thermal/thermal_zone0/temp");
+
+    command.stdout(Stdio::piped());
+
+    let output = command.execute_output().unwrap();
+    let cpu_temp_str = String::from_utf8(output.stdout).unwrap();
+    //println!("{}",cpu_temp_str.trim()); trim()用于去除换行符 '\n'
+    let cpu_temp = cpu_temp_str.trim().parse::<i32>().unwrap() / 1000;
+
+    return cpu_temp.to_string();
+}
+
+#[cfg(feature = "linux")]
+pub fn get_cpu_temp() -> String {
+    let mut command = execute::command_args!("cat", "/sys/class/hwmon/hwmon1/temp1_imput");
 
     command.stdout(Stdio::piped());
 

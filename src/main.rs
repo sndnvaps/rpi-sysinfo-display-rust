@@ -25,6 +25,7 @@ use hal::I2cdev;
 
 fn main() {
     let i2c = I2cdev::new("/dev/i2c-1").unwrap();
+    //i2c.set_slave_address(0x3c);
     let interface = I2CDisplayInterface::new(i2c);
     let mut display = Ssd1306::new(interface, DisplaySize128x64, DisplayRotation::Rotate0)
         .into_buffered_graphics_mode();
